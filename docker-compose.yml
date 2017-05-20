@@ -1,0 +1,16 @@
+version: '2'
+services:
+  pybossa:
+    # ubuntu:14.04 installs postgres 9.4 client
+    image: teamforecast/pybossa:latest
+    depends_on:
+      - db
+    ports:
+      - "3002:80"
+
+  db:
+    image: postgres:9.4
+    environment:
+      - POSTGRES_USER=pybossa
+      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=pybossa

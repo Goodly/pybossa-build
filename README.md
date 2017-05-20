@@ -1,6 +1,8 @@
+# NLP Hints
+
 This is a Docker build that creates a standalone Pybossa container for testing purposes.
 
-Pybossa in installed from the master branch of https://github.com/Scifabric/pybossa
+Pybossa is installed from the master branch of https://github.com/Scifabric/pybossa
 Supervisor is installed to run Pybossa and supporting processes.
 
 One external container is required, a PostgreSQL database.
