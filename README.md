@@ -1,4 +1,4 @@
-# NLP Hints
+# Unofficial Pybossa build for testing
 
 This is a Docker build that creates a standalone Pybossa container for testing purposes.
 
