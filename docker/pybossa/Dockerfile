@@ -1,4 +1,6 @@
 FROM ubuntu:14.04.5
+# Note ARGs set defaults only. They can be overridden by command line --build-args
+ARG SOURCE_BRANCH=master
 ENV PYTHONUNBUFFERED 1
 ENV TERM xterm
 
@@ -36,7 +38,7 @@ RUN ./prepare.sh
 
 WORKDIR /ansible_build
 COPY ./pybossa .
-RUN ansible-playbook playbook.yml -i ansible_hosts -c local
+RUN ansible-playbook playbook.yml -i ansible_hosts -c local -e "SOURCE_BRANCH=${SOURCE_BRANCH}"
 
 RUN rm -rf /var/lib/apt/lists/*
 

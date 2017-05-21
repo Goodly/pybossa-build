@@ -1,2 +1,2 @@
 #!/bin/sh
-docker build -f docker/pybossa/Dockerfile docker/
+docker build --no-cache --build-arg SOURCE_BRANCH=${SOURCE_BRANCH:-master} -f docker/pybossa/Dockerfile docker/

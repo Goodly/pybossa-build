@@ -1,8 +1,13 @@
-version: '2'
+version: '3'
 services:
   pybossa:
     # ubuntu:14.04 installs postgres 9.4 client
-    image: teamforecast/pybossa:latest
+    build:
+      context: ./docker
+      dockerfile: ./pybossa/Dockerfile
+      # haven't yet succeeded in getting this source path to work from here
+      args:
+        - SOURCE_PATH=${SOURCE_PATH:-master}
     depends_on:
       - db
     ports:
