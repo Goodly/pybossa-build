@@ -9,3 +9,4 @@ log_stderr=true
 logfile={{pybossa_home}}/pybossa-uwsgi.log
 logfile_maxbytes=10MB
 logfile_backups=2
+stopsignal=QUIT
