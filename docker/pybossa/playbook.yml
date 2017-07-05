@@ -5,6 +5,7 @@
     pybossa_user: "pybossa"
     pybossa_home: "/home/pybossa"
     pybossa_path: "/home/pybossa/repo"
+    pybossa_settings_override_path: "{{pybossa_path}}/settings_from_env.py"
     virtualenv_path: "/home/pybossa/env"
     html_path: "/home/pybossa/html"
     ansible_build_path: "/ansible_build"
@@ -116,6 +117,8 @@
       become_user: "{{pybossa_user}}"
       pip: name=uwsgi state=latest chdir={{pybossa_path}} virtualenv={{virtualenv_path}} virtualenv_site_packages=yes
 
+# Note: Database connection is not known until deployment of image.
+# Database and other secret settings will be in environment variables.
     - name: check alembic.ini existing
       stat: path={{pybossa_path}}/alembic.ini
       register: check_alembic
@@ -126,10 +129,15 @@
             mode="0640" owner={{pybossa_user}} group={{pybossa_user}}
       when: not check_alembic.stat.exists
 
-    - name: Put db connection string into alembic.ini
-      replace: regexp="^sqlalchemy.url.*$"
-               replace="sqlalchemy.url = postgresql://pybossa:tester@db/pybossa"
-               dest={{pybossa_path}}/alembic.ini
+    - name: copy cli.py that uses environment to set sqlalchemy db connection
+      copy: src={{ansible_build_path}}/cli.py
+            dest={{pybossa_path}}/cli.py
+            mode="0640" owner={{pybossa_user}} group={{pybossa_user}}
+
+    - name: copy env.py that uses environment to set sqlalchemy db connection
+      copy: src={{ansible_build_path}}/env.py
+            dest={{pybossa_path}}/alembic/env.py
+            mode="0640" owner={{pybossa_user}} group={{pybossa_user}}
 
     - name: check settings_local.py existing
       stat: path={{pybossa_path}}/settings_local.py
@@ -141,14 +149,10 @@
             mode="0640" owner={{pybossa_user}} group={{pybossa_user}}
       when: not check_settings.stat.exists
 
-    - name: Put db connection string into settings_local.py
-      replace: regexp="^SQLALCHEMY_DATABASE_URI.*$"
-               replace="SQLALCHEMY_DATABASE_URI = 'postgresql://pybossa:tester@db/pybossa'"
-               dest={{pybossa_path}}/settings_local.py
-
-# Note: Databases and database users are configured to be installed by Dockerfile
-# It is not convenient to configure a database in Docker since the database
-# isn't running yet.
+    - name: copy settings_local override that configs db from env
+      copy: src={{ansible_build_path}}/settings_from_env.py
+            dest={{ ansible_env.PYBOSSA_SETTINGS }}
+            mode="0640" owner={{pybossa_user}} group={{pybossa_user}}
 
     - name: install Supervisor
       pip: name=supervisor

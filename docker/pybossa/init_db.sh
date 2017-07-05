@@ -1,3 +1,5 @@
 #!/bin/bash
 set -e
-sudo -u pybossa sh /ansible_build/init_db2.sh
+cd /home/pybossa/repo
+. /home/pybossa/env/bin/activate
+python cli.py db_create

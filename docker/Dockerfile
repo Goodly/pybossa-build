@@ -36,6 +36,7 @@ WORKDIR /bd_build
 COPY ./bd_build /bd_build
 RUN ./prepare.sh
 
+ENV PYBOSSA_SETTINGS /home/pybossa/repo/settings_from_env.py
 WORKDIR /ansible_build
 COPY ./pybossa .
 RUN ansible-playbook playbook.yml -i ansible_hosts -c local -e "SOURCE_BRANCH=${SOURCE_BRANCH}"

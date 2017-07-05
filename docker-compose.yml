@@ -4,18 +4,25 @@ services:
     # ubuntu:14.04 installs postgres 9.4 client
     build:
       context: ./docker
-      dockerfile: ./pybossa/Dockerfile
-      # haven't yet succeeded in getting this source path to work from here
+      dockerfile: ./Dockerfile
       args:
-        - SOURCE_PATH=${SOURCE_PATH:-master}
+      - SOURCE_BRANCH="${SOURCE_BRANCH:-master}"
+    environment:
+      - PYBOSSA_SECRET=test-only-y8y2i4ISpfwEMhLjUfXH9e5qA8qJkKA31tuLakvy
+      - PYBOSSA_SESSION_SECRET=test-only-y8y2i4ISpfwEMhLjUfXH9e5qA8qJkKA31tuLakvy
+      - PYBOSSA_DATABASE_URL=postgresql://dfuser:test-only-RDkWWAG9jXMAFO8pXu6K@pybossa-db/dforce
+      - PYBOSSA_ITSDANGEROUS_SECRET=test-only-2R1ucOk8KxEeh5SCaXcWPt4oDf2sHQvpiyHAPoyX
+      - PYBOSSA_BRAND=Deciding Force
+      - PYBOSSA_TITLE=Deciding Force
+      - PYBOSSA_LOGO=default_logo.svg
     depends_on:
-      - db
+      - pybossa-db
     ports:
-      - "3002:80"
+      - "8000:80"
 
-  db:
+  pybossa-db:
     image: postgres:9.4
     environment:
-      - POSTGRES_USER=pybossa
-      - POSTGRES_PASSWORD=
-      - POSTGRES_DB=pybossa
+      - POSTGRES_USER=dfuser
+      - POSTGRES_PASSWORD=test-only-RDkWWAG9jXMAFO8pXu6K
+      - POSTGRES_DB=dforce

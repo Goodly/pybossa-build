@@ -20,6 +20,9 @@ app = create_app(run_as_server=False)
 
 def setup_alembic_config():
     alembic_cfg = Config("alembic.ini")
+    if 'PYBOSSA_DATABASE_URL' in os.environ:
+        alembic_cfg.set_section_option('alembic', 'sqlalchemy.url',
+                                       os.environ['PYBOSSA_DATABASE_URL'])
     command.stamp(alembic_cfg, "head")
 
 def db_create():
