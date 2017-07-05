@@ -5,7 +5,6 @@
     pybossa_user: "pybossa"
     pybossa_home: "/home/pybossa"
     pybossa_path: "/home/pybossa/repo"
-    pybossa_settings_override_path: "{{pybossa_path}}/settings_from_env.py"
     virtualenv_path: "/home/pybossa/env"
     html_path: "/home/pybossa/html"
     ansible_build_path: "/ansible_build"
