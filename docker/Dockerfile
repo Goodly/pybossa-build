@@ -46,7 +46,6 @@ RUN rm -rf /var/lib/apt/lists/*
 # most useful dir to end up in after "docker-compose exec pybossa bash"
 WORKDIR /home/pybossa
 
-EXPOSE 5000
 CMD ["/usr/local/bin/supervisord", \
      "--nodaemon", \
      "--configuration=/etc/supervisor/supervisord.conf"]
