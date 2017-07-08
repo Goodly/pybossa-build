@@ -111,10 +111,15 @@
       become_user: "{{pybossa_user}}"
       pip: chdir={{pybossa_path}} requirements={{pybossa_path}}/requirements.txt virtualenv={{virtualenv_path}} virtualenv_site_packages=yes
 
-    - name: Install uwsgi
+    - name: "Install uwsgi"
       become: true
       become_user: "{{pybossa_user}}"
       pip: name=uwsgi state=latest chdir={{pybossa_path}} virtualenv={{virtualenv_path}} virtualenv_site_packages=yes
+
+    - name: "pip install dj_database_url for use by /ansible_build/reset_pybossa_db.py"
+      become: true
+      become_user: "{{pybossa_user}}"
+      pip: name=dj-database-url state=latest chdir={{pybossa_path}} virtualenv={{virtualenv_path}} virtualenv_site_packages=yes
 
 # Note: Database connection is not known until deployment of image.
 # Database and other secret settings will be in environment variables.

@@ -43,8 +43,9 @@ RUN ansible-playbook playbook.yml -i ansible_hosts -c local -e "SOURCE_BRANCH=${
 
 RUN rm -rf /var/lib/apt/lists/*
 
-# most useful dir to end up in after "docker-compose exec pybossa bash"
+# most useful dir for "docker-compose exec pybossa bash"
 WORKDIR /home/pybossa
+COPY bashrc_to_docker /home/pybossa/.bashrc
 
 CMD ["/usr/local/bin/supervisord", \
      "--nodaemon", \
