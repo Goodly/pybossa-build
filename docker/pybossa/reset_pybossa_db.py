@@ -24,7 +24,7 @@ with psycopg2.connect(host=config['HOST'],
         TEMPLATE template0;
     """.format(ext.quote_ident(config['NAME'], conn))
 
-# autocommit mode required for create and drop
+    # autocommit mode required for create and drop
     conn.set_session(autocommit=True)
     with conn.cursor() as cur:
         print DROP_DB_SQL
