@@ -1,7 +1,6 @@
 version: '3'
 services:
   pybossa:
-    # ubuntu:14.04 installs postgres 9.4 client
     build:
       context: ./docker
       dockerfile: ./Dockerfile
