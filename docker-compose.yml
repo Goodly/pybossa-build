@@ -13,7 +13,7 @@ services:
       - PYBOSSA_ITSDANGEROUS_SECRET=test-only-2R1ucOk8KxEeh5SCaXcWPt4oDf2sHQvpiyHAPoyX
       - PYBOSSA_BRAND=Deciding Force
       - PYBOSSA_TITLE=Deciding Force
-      - PYBOSSA_LOGO=textthresher_logo.png
+      - PYBOSSA_LOGO=default_logo.svg
     depends_on:
       - pybossa-db
     ports:
