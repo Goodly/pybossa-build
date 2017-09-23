@@ -4,13 +4,15 @@ ARG SOURCE_BRANCH=master
 ENV PYTHONUNBUFFERED 1
 ENV TERM xterm
 
-# helpful aliases
-COPY bashrc_to_docker /root/.bashrc
-
 # ARG vars exist only during build
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update -q && apt-get install -y --no-install-recommends \
-        apt-transport-https ca-certificates
+
+RUN apt-get update -q
+
+# Borrowed script to install LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
+WORKDIR /bd_build
+COPY ./bd_build /bd_build
+RUN ./prepare.sh
 
 RUN apt-get install -y --no-install-recommends \
         git-core curl less psmisc \
@@ -31,11 +33,6 @@ RUN apt-add-repository ppa:ansible/ansible
 RUN apt-get update -q && apt-get install -y --no-install-recommends \
         ansible
 
-# Borrowed script to install LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
-WORKDIR /bd_build
-COPY ./bd_build /bd_build
-RUN ./prepare.sh
-
 ENV PYBOSSA_SETTINGS /home/pybossa/repo/settings_from_env.py
 WORKDIR /ansible_build
 COPY ./pybossa .
@@ -43,10 +40,12 @@ RUN ansible-playbook playbook.yml -i ansible_hosts -c local -e "SOURCE_BRANCH=${
 
 RUN rm -rf /var/lib/apt/lists/*
 
-# most useful dir for "docker-compose exec pybossa bash"
-WORKDIR /home/pybossa
+# helpful aliases
+COPY bashrc_to_docker /root/.bashrc
 COPY bashrc_to_docker /home/pybossa/.bashrc
 
+# most useful dir for "docker-compose exec pybossa bash"
+WORKDIR /home/pybossa
 CMD ["/usr/local/bin/supervisord", \
      "--nodaemon", \
      "--configuration=/etc/supervisor/supervisord.conf"]
