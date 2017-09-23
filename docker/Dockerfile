@@ -26,6 +26,7 @@ RUN apt-get install -y --no-install-recommends \
         python-setuptools python-pip \
         libjpeg-dev swig \
         dbus libdbus-1-dev libdbus-glib-1-dev \
+        libsasl2-dev libldap2-dev libssl-dev \
         postgresql-client postgresql-server-dev-all libpq-dev python-psycopg2 \
         redis-server nginx
 
