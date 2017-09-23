@@ -228,6 +228,11 @@
                 dest=/etc/nginx/sites-available/default
                 mode="0640" owner=root group=root
 
+    - name: copy Goodly logo to default theme static directory
+      copy: src={{ansible_build_path}}/textthresher_logo.png
+            dest={{pybossa_path}}/pybossa/themes/default/static/img/textthresher_logo.png
+            mode="0644" owner=pybossa group=pybossa
+
     # activate virtualenv always in .bashrc
     - name: virtualenv usage by default on bash login
       become: true
