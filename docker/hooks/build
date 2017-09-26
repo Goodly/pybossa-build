@@ -1,2 +1,4 @@
 #!/bin/bash
-docker build --build-arg PYBOSSA_COMMIT=${PYBOSSA_COMMIT:-master} -t $IMAGE_NAME .
+echo "DOCKER REPO: $DOCKER_REPO, CACHE_TAG: $CACHE_TAG, IMAGE_NAME: $IMAGE_NAME"
+docker build --build-arg PYBOSSA_COMMIT=${SOURCE_BRANCH:-master} -t $IMAGE_NAME .
+docker tag ${IMAGE_NAME} $(DOCKER_REPO}:latest
