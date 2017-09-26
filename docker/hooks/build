@@ -1,4 +1,10 @@
 #!/bin/bash
-echo "DOCKER REPO: $DOCKER_REPO, CACHE_TAG: $CACHE_TAG, IMAGE_NAME: $IMAGE_NAME"
+echo "DOCKER REPO: $DOCKER_REPO, IMAGE_NAME: $IMAGE_NAME"
 docker build --build-arg PYBOSSA_COMMIT=${SOURCE_BRANCH:-master} -t $IMAGE_NAME .
-docker tag ${IMAGE_NAME} $(DOCKER_REPO}:latest
+# If we are building a branch, triggered by a pattern match on a version number,
+# then $IMAGE_NAME includes the version as the tag. We also want to tag this
+# as :latest. But the master branch is configured to be tagged :edge, do not tag
+# master branch builds with :latest
+if [[ $SOURCE_BRANCH != "master" ]]; then
+  docker tag ${IMAGE_NAME} ${DOCKER_REPO}:latest
+fi
