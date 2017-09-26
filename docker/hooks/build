@@ -1,3 +1,2 @@
 #!/bin/bash
-ls -l
 docker build --build-arg PYBOSSA_COMMIT=${PYBOSSA_COMMIT:-master} -t $IMAGE_NAME .
