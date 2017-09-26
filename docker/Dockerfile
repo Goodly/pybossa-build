@@ -1,6 +1,7 @@
 FROM ubuntu:14.04.5
 # Note ARGs set defaults only. They can be overridden by command line --build-args
 ARG PYBOSSA_COMMIT=master
+RUN echo "Building Pybossa from this branch/tag: ${PYBOSSA_COMMIT}"
 ENV PYTHONUNBUFFERED 1
 ENV TERM xterm
 
@@ -37,7 +38,6 @@ RUN apt-get update -q && apt-get install -y --no-install-recommends \
 ENV PYBOSSA_SETTINGS /home/pybossa/repo/settings_from_env.py
 WORKDIR /ansible_build
 COPY ./pybossa .
-RUN echo "Building Pybossa from this branch/tag: ${PYBOSSA_COMMIT}"
 RUN ansible-playbook playbook.yml -i ansible_hosts -c local -e "PYBOSSA_COMMIT=${PYBOSSA_COMMIT}"
 
 RUN rm -rf /var/lib/apt/lists/*
