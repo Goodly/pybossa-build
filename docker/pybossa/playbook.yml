@@ -87,7 +87,7 @@
       become_user: "{{pybossa_user}}"
       git:  repo=https://github.com/Scifabric/pybossa.git
             dest={{pybossa_path}} accept_hostkey=yes
-            remote=origin version={{SOURCE_BRANCH}}
+            remote=origin version={{PYBOSSA_COMMIT}}
 
 # Changed to contrib/redis-supervisor/redis.conf nodaemon version
     - name: copy Redis no daemon config

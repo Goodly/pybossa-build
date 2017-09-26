@@ -5,7 +5,7 @@ services:
       context: ./docker
       dockerfile: ./Dockerfile
       args:
-        - SOURCE_BRANCH="${SOURCE_BRANCH:-master}"
+        - PYBOSSA_COMMIT="${PYBOSSA_COMMIT:-master}"
     environment:
       - PYBOSSA_SECRET=test-only-y8y2i4ISpfwEMhLjUfXH9e5qA8qJkKA31tuLakvy
       - PYBOSSA_SESSION_SECRET=test-only-y8y2i4ISpfwEMhLjUfXH9e5qA8qJkKA31tuLakvy
