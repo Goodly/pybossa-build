@@ -7,6 +7,7 @@
     pybossa_path: "/home/pybossa/repo"
     virtualenv_path: "/home/pybossa/env"
     html_path: "/home/pybossa/html"
+    static_assets: "{{pybossa_path}}/pybossa/themes/default/static"
     ansible_build_path: "/ansible_build"
     redis_host: "127.0.0.1"
     redis_port: "6379"
@@ -221,21 +222,26 @@
                 dest={{pybossa_path}}/pybossa.ini
                 mode="0640" owner=pybossa group=pybossa
 
-    - name: Configure Nginx to not daemonize
-      lineinfile:
-        dest=/etc/nginx/nginx.conf
-        line="daemon off;"
-        state=present
-        insertbefore=BOF
+    - name: Install NGINX main conf
+      template: src={{ansible_build_path}}/main.nginx
+                dest=/etc/nginx/nginx.conf
+                mode="0640" owner=root group=root
 
     - name: Install pybossa.conf for NGINX
       template: src={{ansible_build_path}}/pybossa.nginx
                 dest=/etc/nginx/sites-available/default
                 mode="0640" owner=root group=root
 
-    - name: copy Goodly logo to default theme static directory
+    - name: Link html root to Pybossa static assets
+      file: src={{static_assets}}
+            path={{html_path}}/static
+            state=link
+            owner={{pybossa_user}}
+            group={{pybossa_user}}
+
+    - name: copy TextThresher logo to default theme static directory
       copy: src={{ansible_build_path}}/textthresher_logo.png
-            dest={{pybossa_path}}/pybossa/themes/default/static/img/textthresher_logo.png
+            dest={{static_assets}}/img/textthresher_logo.png
             mode="0644" owner=pybossa group=pybossa
 
     # activate virtualenv always in .bashrc
