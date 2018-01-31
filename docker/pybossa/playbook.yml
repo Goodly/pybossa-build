@@ -116,6 +116,11 @@
       become_user: "{{pybossa_user}}"
       pip: name=uwsgi state=latest chdir={{pybossa_path}} virtualenv={{virtualenv_path}} virtualenv_site_packages=yes
 
+    - name: "Install uwsgitop"
+      become: true
+      become_user: "{{pybossa_user}}"
+      pip: name=uwsgitop state=latest chdir={{pybossa_path}} virtualenv={{virtualenv_path}} virtualenv_site_packages=yes
+
     - name: "pip install dj_database_url for use by /ansible_build/reset_pybossa_db.py"
       become: true
       become_user: "{{pybossa_user}}"
