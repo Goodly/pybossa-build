@@ -31,6 +31,10 @@ RUN apt-get install -y --no-install-recommends \
         postgresql-client postgresql-server-dev-all libpq-dev python-psycopg2 \
         redis-server nginx
 
+# Monitoring/ops utility
+RUN apt-get install -y --no-install-recommends \
+        htop
+
 RUN apt-add-repository ppa:ansible/ansible
 RUN apt-get update -q && apt-get install -y --no-install-recommends \
         ansible
