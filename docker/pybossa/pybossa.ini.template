@@ -1,6 +1,5 @@
 [uwsgi]
 master = 1
-#lazy-apps = 1
 socket = /tmp/pybossa.sock
 chmod-socket = 666
 chdir = {{pybossa_path}}
@@ -10,10 +9,11 @@ module = run:app
 cpu-affinity = 1
 processes = %k
 threads = 2
-stats = /tmp/pybossa-stats.sock
-buffer-size = 65535
-#die-on-term = true
-stats = 127.0.0.1:9191
-memory-report = 1
 max-fd = 10000 # see nginx worker_rlimit_nofile
-listen = 5000 # see nginx worker_connections
+buffer-size = 65535
+memory-report = 1
+stats = /tmp/pybossa-stats.sock
+#lazy-apps = 1
+# uwsgi won't start if listen queue size > net.core.somaxconn (default 128)
+#listen = 5000 # see nginx worker_connections
+#die-on-term = true
