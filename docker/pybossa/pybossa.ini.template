@@ -7,13 +7,26 @@ pythonpath = .
 virtualenv = {{virtualenv_path}}
 module = run:app
 cpu-affinity = 1
-processes = %k
-threads = 2
-max-fd = 10000 # see nginx worker_rlimit_nofile
 buffer-size = 65535
 memory-report = 1
 stats = /tmp/pybossa-stats.sock
+#disable-logging = True
 #lazy-apps = 1
-# uwsgi won't start if listen queue size > net.core.somaxconn (default 128)
-#listen = 5000 # see nginx worker_connections
+
+# Supervisor is configured to send SIGQUIT per legacy uwsgi behavior
 #die-on-term = true
+
+# Tuning. %k is cpu core count
+processes = %(%k + 1)
+threads = 2
+
+# uwsgi won't start if listen queue size > net.core.somaxconn (default 128)
+# Docker container must be privileged on ECS change somaxconn
+# Container startup script sets this value
+# sudo sysctl -w net.core.somaxconn=2000
+listen = $(PYBOSSA_SOMAXCONN)
+# Configure ulimit in ECS Task container settings.
+# set ulimit to MAX(nginx worker_rlimit_nofile, max-fd)
+# ulimit -Hn
+# ulimit -Sn
+max-fd = 4000

@@ -52,6 +52,5 @@ COPY bashrc_to_docker /home/pybossa/.bashrc
 
 # most useful dir for "docker-compose exec pybossa bash"
 WORKDIR /home/pybossa
-CMD ["/usr/local/bin/supervisord", \
-     "--nodaemon", \
-     "--configuration=/etc/supervisor/supervisord.conf"]
+COPY ./pybossa/start_pybossa.sh /home/pybossa
+CMD ["bash", "/home/pybossa/start_pybossa.sh"]
