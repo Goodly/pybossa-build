@@ -3,6 +3,6 @@
 if [[ -n ${PYBOSSA_SOMAXCONN} ]]; then
   sudo sysctl -w net.core.somaxconn=${PYBOSSA_SOMAXCONN}
 else
-  export PYBOSSA_SOMAXCONN=128 # Amazon Linux default
+  export PYBOSSA_SOMAXCONN=$(sysctl -n net.core.somaxconn)
 fi
 exec /usr/local/bin/supervisord --nodaemon --configuration=/etc/supervisor/supervisord.conf
