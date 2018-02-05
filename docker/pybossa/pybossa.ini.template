@@ -21,9 +21,9 @@ processes = %(%k + 1)
 threads = 2
 
 # uwsgi won't start if listen queue size > net.core.somaxconn (default 128)
-# Docker container must be privileged on ECS change somaxconn
-# Container startup script sets this value
-# sudo sysctl -w net.core.somaxconn=2000
+# Container startup script must set somaxconn, e.g.
+# sudo sysctl -w net.core.somaxconn=$(PYBOSSA_SOMAXCONN)
+# Docker container must be privileged on ECS in order to change somaxconn.
 listen = $(PYBOSSA_SOMAXCONN)
 # Configure ulimit in ECS Task container settings.
 # set ulimit to MAX(nginx worker_rlimit_nofile, max-fd)

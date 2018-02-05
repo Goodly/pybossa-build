@@ -53,4 +53,5 @@ COPY bashrc_to_docker /home/pybossa/.bashrc
 # most useful dir for "docker-compose exec pybossa bash"
 WORKDIR /home/pybossa
 COPY ./pybossa/start_pybossa.sh /home/pybossa
+COPY ./pybossa/top_uwsgi.sh /home/pybossa
 CMD ["bash", "/home/pybossa/start_pybossa.sh"]
