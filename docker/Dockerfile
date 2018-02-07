@@ -46,6 +46,11 @@ RUN ansible-playbook playbook.yml -i ansible_hosts -c local -e "PYBOSSA_COMMIT=$
 
 RUN rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /var/www
+RUN cp -av /home/pybossa/repo/pybossa/themes/default/static /var/www
+# Must declare volume after it is populated with files
+VOLUME ["/var/www/static"]
+
 # helpful aliases
 COPY bashrc_to_docker /root/.bashrc
 COPY bashrc_to_docker /home/pybossa/.bashrc

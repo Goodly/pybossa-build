@@ -6,7 +6,7 @@
     pybossa_home: "/home/pybossa"
     pybossa_path: "/home/pybossa/repo"
     virtualenv_path: "/home/pybossa/env"
-    html_path: "/home/pybossa/html"
+    html_path: "/var/www/static"
     static_assets: "{{pybossa_path}}/pybossa/themes/default/static"
     ansible_build_path: "/ansible_build"
     redis_host: "127.0.0.1"
