@@ -55,7 +55,7 @@ ADMINS = re.split(r'[ ;,]+', admin_emails)
 
 ## Mail setup (see https://pythonhosted.org/Flask-Mail/)
 MAIL_SERVER = os.environ.get('PYBOSSA_MAIL_SERVER', 'localhost')
-MAIL_PORT = os.environ.get('PYBOSSA_MAIL_PORT', 25)
+MAIL_PORT = int(os.environ.get('PYBOSSA_MAIL_PORT', 25))
 MAIL_USE_TLS = True
 MAIL_USERNAME = os.environ.get('PYBOSSA_MAIL_USERNAME', None)
 MAIL_PASSWORD = os.environ.get('PYBOSSA_MAIL_PASSWORD', None)
