@@ -5,7 +5,9 @@ services:
       context: ./docker
       dockerfile: ./Dockerfile
       args:
-        - PYBOSSA_COMMIT="${PYBOSSA_COMMIT:-master}"
+#       - PYBOSSA_COMMIT="${PYBOSSA_COMMIT:-master}"
+        # c2d7630 is Feb 7 2018 commit with JSONB API, two commits after v2.9.0
+        - PYBOSSA_COMMIT="c2d7630"
     environment:
       - PYBOSSA_SECRET=test-only-y8y2i4ISpfwEMhLjUfXH9e5qA8qJkKA31tuLakvy
       - PYBOSSA_SESSION_SECRET=test-only-y8y2i4ISpfwEMhLjUfXH9e5qA8qJkKA31tuLakvy
@@ -20,7 +22,7 @@ services:
       - "8000:80"
 
   pybossa-db:
-    image: postgres:9.4
+    image: postgres:9.6
     environment:
       - POSTGRES_USER=dfuser
       - POSTGRES_PASSWORD=test-only-RDkWWAG9jXMAFO8pXu6K
