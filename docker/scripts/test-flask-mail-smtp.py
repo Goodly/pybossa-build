@@ -6,7 +6,7 @@ from flask_mail import Message
 
 if __name__ == '__main__':
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('-s', '--from', dest='sender')
+    arg_parser.add_argument('-f', '--from', dest='sender')
     arg_parser.add_argument('-t', '--to')
     args = arg_parser.parse_args()
 
