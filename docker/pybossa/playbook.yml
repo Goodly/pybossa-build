@@ -236,23 +236,3 @@
       copy: src={{ansible_build_path}}/textthresher_logo.png
             dest={{static_assets}}/img/textthresher_logo.png
             mode="0644" owner=pybossa group=pybossa
-
-    # activate virtualenv always in .bashrc
-    - name: virtualenv usage by default on bash login
-      become: true
-      become_user: "{{pybossa_user}}"
-      lineinfile:
-        dest={{pybossa_home}}/.bashrc
-        line=". {{virtualenv_path}}/bin/activate"
-        state=present
-        insertafter=EOF
-        create=yes
-
-    - name: go to repo directory on bash login
-      become: true
-      become_user: "{{pybossa_user}}"
-      lineinfile:
-        dest={{pybossa_home}}/.bashrc
-        line="cd {{pybossa_path}}"
-        state=present
-        insertafter=EOF
